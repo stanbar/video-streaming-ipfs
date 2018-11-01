@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 
-class Preload extends Component {
+class Preload extends React.Component {
 
-    render() {
+    public render() {
         return (
             <div className="Preload">
                 <header className="App-header">
