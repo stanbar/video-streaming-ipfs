@@ -1,45 +1,68 @@
-import {Buffer} from 'buffer'
 import * as React from 'react';
 import './App.css';
-import ipfs from './ipfs/Node'
+import Gallery from "./Gallery";
 import logo from './logo.svg';
+import Video from "./Models/Video";
+import Player from "./Player";
 
-class App extends React.Component {
+interface IAppProps {
+    node: any
+}
 
-    constructor(props: any) {
-        super(props);
-        this.doChain()
+interface IAppState {
+    videos: Video[] | null;
+    selectedVideo: string | null
+}
+
+class App extends React.Component<IAppProps, IAppState> {
+    public state: IAppState = {
+        videos: null,
+        selectedVideo: null
+    };
+
+
+    public componentDidMount() {
+        this.fetchVideosMetadata()
     }
 
-    public async doChain() {
-
+    public async fetchVideosMetadata() {
         try {
-            const version = await ipfs.version();
-            console.log('Version:' + version.version);
-            const filesAdded = await ipfs.files.add({
-                content: Buffer.from('We are using a customized repo!'),
-                path: 'test-data.txt'
-            });
-            console.log('\nAdded file:', filesAdded[0].path, filesAdded[0].hash);
-            const data = await ipfs.files.cat(filesAdded[0].hash);
-            console.log('\nFetched file content:' + data);
+            const ipfs = this.props.node;
+            console.log("Started downloading videos metadata");
+            const videos: any = await ipfs.dag.get('zdpuAkgUJajpAMVpj5bhLK167jtjUXSNzGPhu1y1BwKFSHuAQ');
+            console.log("Finished downloading videos metadata");
+            this.setState({videos: videos.value});
         } catch (err) {
             console.log('File Processing Error:', err)
         }
-        console.log('\n\nStopping the node');
-        await ipfs.stop();
-        console.log('Check "/var/ipfs/data" to see what your customized repository looks like on disk.')
-
     }
 
     public render() {
+        const {node} = this.props;
+        const {selectedVideo,videos} = this.state;
         return (
             <div className="App">
+                {!videos &&
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                 </header>
+                }
+
+                {videos && !selectedVideo &&
+                <Gallery onThumbnailClick={this.onThumbnailClick} node={node} videos={videos}/>
+                }
+                {selectedVideo &&
+                    <Player ipfsHash={selectedVideo} node={node} onBack={this.onBack}/>
+                }
             </div>
         );
+    }
+
+    private onThumbnailClick = (video: Video) => () => {
+        this.setState({selectedVideo: video.videoHash})
+    };
+    private onBack = () => {
+        this.setState({selectedVideo: null})
     }
 }
 
