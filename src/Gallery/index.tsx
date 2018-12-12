@@ -4,6 +4,7 @@ import {WithStyles, withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
 import {MouseEventHandler} from "react";
 import Video from "../Models/Video";
+import {GridListTileBar} from "@material-ui/core";
 
 
 const styles: any = (theme: any) => ({
@@ -51,12 +52,11 @@ class Gallery extends React.Component<IThumbnailProps, IGalleryState> {
         return (
             <div className={classes.root}>
                 <GridList className={classes.gridList} cols={3}>
-
                     {videos.map(video => {
                         return <GridListTile key={video.thumbnailHash} cols={1}>
-                            <p>{video.name}</p>
                             <img onClick={this.props.onThumbnailClick(video)}
                                  src={this.state.thumbnails.get(video.thumbnailHash)} alt={video.name}/>
+                            <GridListTileBar title={video.name} subtitle={`${video.car.brand} ${video.car.model} (${video.car.horsePower}Hp)`}/>
                         </GridListTile>
                     })}
 

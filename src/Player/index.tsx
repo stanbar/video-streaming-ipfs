@@ -3,7 +3,7 @@ import * as Hls from 'hls.js'
 // @ts-ignore
 import HlsjsIpfsLoader from 'hlsjs-ipfs-loader'
 import * as React from 'react';
-import {withStyles, WithStyles} from "@material-ui/core";
+import {Typography, withStyles, WithStyles} from "@material-ui/core";
 
 const styles: any = {
     App: {
@@ -14,8 +14,6 @@ const styles: any = {
         height: '40vmin'
     },
     AppHeader: {
-        backgroundColor: '#282c34',
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -64,15 +62,14 @@ class Player extends React.Component<IPlayerProps, {}> {
     }
 
     public render() {
-        const {classes} = this.props;
+        const {ipfsHash, classes} = this.props;
         return (
             <div className={classes.App}>
                 <header className={classes.AppHeader}>
                     <Button onClick={this.props.onBack}>Back</Button>
-
                     <video onClick={this.onVideoClick} width={500} ref={element => this.videoRef = element}
                            id="video" controls={true}/>
-
+                    <Typography variant="h5">IPFS: {ipfsHash}</Typography>
                 </header>
             </div>
         );

@@ -2,6 +2,7 @@
   "name": "video-streaming-ipfs",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
@@ -10,6 +11,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.6.1",
+    "@material-ui/icons": "^3.0.1",
     "hls.js": "^0.11.0",
     "hlsjs-ipfs-loader": "^0.1.2",
     "ipfs": "^0.33.1",

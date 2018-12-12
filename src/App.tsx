@@ -4,9 +4,9 @@ import logo from './logo.svg';
 import Video from "./Models/Video";
 import Player from "./Player";
 import NodeInfo from "./Ipfs/NodeInfo";
-import {withStyles, WithStyles} from "@material-ui/core";
+import {Grid, withStyles, WithStyles, Typography} from "@material-ui/core";
 
-const styles : any= {
+const styles: any = {
     App: {
         textAlign: "center",
     },
@@ -15,22 +15,21 @@ const styles : any= {
         height: '40vmin'
     },
     AppHeader: {
-        backgroundColor: '#282c34',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'stretch',
+        justifyContent: 'space-around',
         fontSize: 'calc(10px + 2vmin)',
     },
-    AppLink : {
+    AppLink: {
         color: "#61dafb"
     },
-    "@keyframes AppLogoSpin" : {
-        from : {
+    "@keyframes AppLogoSpin": {
+        from: {
             transform: 'rotate(0deg)'
         },
-        to : {
+        to: {
             transform: 'rotate(360deg)'
         }
     }
@@ -51,6 +50,7 @@ class App extends React.Component<IAppProps, IAppState> {
         selectedVideo: null
     };
 
+    public videosMetaDataIPDL = "zdpuAkgUJajpAMVpj5bhLK167jtjUXSNzGPhu1y1BwKFSHuAQ";
 
     public componentDidMount() {
         this.fetchVideosMetadata()
@@ -60,7 +60,7 @@ class App extends React.Component<IAppProps, IAppState> {
         try {
             const ipfs = this.props.node;
             console.log("Started downloading videos metadata");
-            const videos: any = await ipfs.dag.get('zdpuAkgUJajpAMVpj5bhLK167jtjUXSNzGPhu1y1BwKFSHuAQ');
+            const videos: any = await ipfs.dag.get(this.videosMetaDataIPDL);
             console.log("Finished downloading videos metadata");
             this.setState({videos: videos.value});
         } catch (err) {
@@ -73,25 +73,30 @@ class App extends React.Component<IAppProps, IAppState> {
         const {selectedVideo, videos} = this.state;
         return (
             <div className={classes.App}>
-                {!videos &&
-                <header className={classes.AppHeader}>
-                    <img src={logo} className={classes.AppLogo} alt="logo"/>
-                    <p>Loading videos metadata from DAG ...</p>
-                    <NodeInfo node={node}/>
-                </header>
-                }
+                <Grid container={true} spacing={24} className={classes.AppHeader}>
+                    <Grid item={true} style={{height: "70vh", marginTop: "50px"}}>
+                        {!videos &&
+                        <header className={classes.AppHeader}>
+                            <img src={logo} className={classes.AppLogo} alt="logo"/>
+                            <p>Loading videos metadata from DAG ...</p>
+                        </header>
+                        }
 
-                {videos && !selectedVideo && <div>
-                    <Gallery onThumbnailClick={this.onThumbnailClick} node={node} videos={videos}/>
-                    <NodeInfo node={node}/>
-                </div>
+                        {videos && !selectedVideo && <div>
+                            <Typography variant="h5">IPLD: {this.videosMetaDataIPDL}</Typography>
+                            <Gallery onThumbnailClick={this.onThumbnailClick} node={node} videos={videos}/>
+                        </div>
 
-                }
-                {selectedVideo && <div>
-                    <Player ipfsHash={selectedVideo} node={node} onBack={this.onBack}/>
+                        }
+                        {selectedVideo && <div>
+                            <Player ipfsHash={selectedVideo} node={node} onBack={this.onBack}/>
+                        </div>
+                        }
+
+                    </Grid>
                     <NodeInfo node={node}/>
-                </div>
-                }
+                </Grid>
+
             </div>
         );
     }
