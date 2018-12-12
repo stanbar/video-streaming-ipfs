@@ -8,10 +8,10 @@
 #### Final website:
 
 ###### Immutable:
-- /ipfs/QmetSTtXzzdR2JTWDwrDZSL99utnDYVoJT4mknU9tbaCzg
-- http://127.0.0.1:8080/ipfs/QmetSTtXzzdR2JTWDwrDZSL99utnDYVoJT4mknU9tbaCzg/
-- fs:/ipfs/QmetSTtXzzdR2JTWDwrDZSL99utnDYVoJT4mknU9tbaCzg
-- ipfs://QmetSTtXzzdR2JTWDwrDZSL99utnDYVoJT4mknU9tbaCzg
+- /ipfs/QmWPMYASJ1hiusgA1YyTnUg7jLHyydidrJtw3JU7hvGCo5
+- http://127.0.0.1:8080/ipfs/QmWPMYASJ1hiusgA1YyTnUg7jLHyydidrJtw3JU7hvGCo5/
+- fs:/ipfs/QmWPMYASJ1hiusgA1YyTnUg7jLHyydidrJtw3JU7hvGCo5
+- ipfs://QmWPMYASJ1hiusgA1YyTnUg7jLHyydidrJtw3JU7hvGCo5
 
 ###### Mutable:
 - /ipns/QmaeUxeAK3N5fyU5o5W8eFeHGy7SUgcxfscewNNGgFak8L
