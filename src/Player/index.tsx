@@ -3,9 +3,39 @@ import * as Hls from 'hls.js'
 // @ts-ignore
 import HlsjsIpfsLoader from 'hlsjs-ipfs-loader'
 import * as React from 'react';
-import '../App.css';
+import {withStyles, WithStyles} from "@material-ui/core";
 
-interface IPlayerProps {
+const styles: any = {
+    App: {
+        textAlign: "center",
+    },
+    AppLogo: {
+        animation: 'AppLogoSpin infinite 20s linear',
+        height: '40vmin'
+    },
+    AppHeader: {
+        backgroundColor: '#282c34',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 'calc(10px + 2vmin)',
+    },
+    AppLink: {
+        color: "#61dafb"
+    },
+    "@keyframes AppLogoSpin": {
+        from: {
+            transform: 'rotate(0deg)'
+        },
+        to: {
+            transform: 'rotate(360deg)'
+        }
+    }
+};
+
+interface IPlayerProps extends WithStyles<typeof styles> {
     ipfsHash: string;
     node: any;
     onBack: () => void;
@@ -16,6 +46,7 @@ class Player extends React.Component<IPlayerProps, {}> {
 
     public componentDidMount() {
         // const ipfsHash = props.ipfsHash;
+
         Hls.DefaultConfig.loader = HlsjsIpfsLoader;
         Hls.DefaultConfig.debug = true;
         if (Hls.isSupported()) {
@@ -33,9 +64,10 @@ class Player extends React.Component<IPlayerProps, {}> {
     }
 
     public render() {
+        const {classes} = this.props;
         return (
-            <div className="App">
-                <header className="App-header">
+            <div className={classes.App}>
+                <header className={classes.AppHeader}>
                     <Button onClick={this.props.onBack}>Back</Button>
 
                     <video onClick={this.onVideoClick} width={500} ref={element => this.videoRef = element}
@@ -53,4 +85,4 @@ class Player extends React.Component<IPlayerProps, {}> {
     }
 }
 
-export default Player;
+export default withStyles(styles)(Player);

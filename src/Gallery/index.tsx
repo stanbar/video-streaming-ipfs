@@ -8,8 +8,7 @@ import Video from "../Models/Video";
 
 const styles: any = (theme: any) => ({
     gridList: {
-        height: 450,
-        width: 500,
+        width: "90%",
     },
     root: {
         backgroundColor: theme.palette.background.paper,
@@ -51,7 +50,7 @@ class Gallery extends React.Component<IThumbnailProps, IGalleryState> {
         console.log("render");
         return (
             <div className={classes.root}>
-                <GridList cellHeight={160} className={classes.gridList} cols={3}>
+                <GridList className={classes.gridList} cols={3}>
 
                     {videos.map(video => {
                         return <GridListTile key={video.thumbnailHash} cols={1}>
